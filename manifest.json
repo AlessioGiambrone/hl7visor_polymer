@@ -1,0 +1,7 @@
+{
+  "name": "hl7visor",
+  "short_name": "hl7visor",
+  "description": "View HL7 v.2.x in a human-readable format.",
+  "start_url": "/",
+  "display": "standalone"
+}

@@ -1,0 +1,71 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
+<link rel="import" href="./hl7-segment.html">
+
+<dom-module id="hl7visor-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+        --app-primary-color: #4285f4;
+        --app-secondary-color: black;
+      }
+
+      .content {
+        width: 100%;
+      }
+
+      h2 {
+        font-family: 'Roboto', 'Noto', sans-serif;
+        -webkit-font-smoothing: antialiased;
+      };
+
+    </style>
+    <div class="content">
+      <h2>The HL7 Parser</h2>
+      <paper-textarea label="Paste HL7 here" value="{{hl7code}}"></paper-textarea>
+      <template is="dom-repeat" items="{{hl7segments}}" as="segment">
+        <hl7-segment hl7code='{{segment}}'></hl7-segment>
+      </template>
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'hl7visor-app',
+
+      properties: {
+        hl7code: {
+          type: String,
+          observer: '_hl7codeChanged',
+        },
+        hl7segments: {
+          type: Array,
+          value: [],
+        },
+      },
+
+      _hl7codeChanged: function(){
+        this.getHl7segments(this.hl7code)
+      },
+
+      getHl7segments: function(hl7){
+        hl7 = hl7.split(/\r?\n/);
+        this.splice('hl7segments', 0, this.hl7segments.length)
+        this.hl7segments= [];
+        for (i in hl7){
+          // We'll check if there was some accidental carriage return
+          if(i>0 && (hl7[i][3]!=='|' || hl7[i].substring(0,3).indexOf('|')>-1)){
+            this.pop('hl7segments', hl7[i])
+            this.push('hl7segments', hl7[i-1]+hl7[i]);
+          }else{
+            this.push('hl7segments', hl7[i]);
+          }
+        }
+      },
+
+    });
+  </script>
+</dom-module>
