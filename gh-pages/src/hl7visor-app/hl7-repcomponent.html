@@ -1,0 +1,48 @@
+<html><head><link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
+
+</head><body><dom-module id="hl7-repcomponent">
+  <template>
+    <style>
+      :host {
+        display: block;
+
+      }
+      paper-tabs, paper-toolbar {
+        --paper-tabs-selection-bar-color: blue;
+        background-color: #e1f5fe;
+        color: #444;
+        padding-left: 2em;
+      }
+      paper-card {
+        width: 100%;
+      }
+      h4 {
+        padding-left: 1em;
+        position: absolute;
+      }
+    </style>
+    <paper-card>
+      <h4>[[card_title]].[[base_title]]</h4>
+      <paper-tabs selected="{{selected}}" no-slide="" scrollable="">
+        <template is="dom-repeat" items="[[component]]" as="subcomponent">
+            <paper-tab hidden="[[subcomponent.hidden]]">[[card_title]].[[base_title]][[[subcomponent.r]]]</paper-tab>
+        </template>
+      </paper-tabs>
+      <iron-pages id="subpages" selected="{{selected}}">
+        <template is="dom-repeat" items="[[component]]" as="subcomponent">
+          <hl7-component card_title="[[card_title]]" component="[[subcomponent]]"></hl7-component>
+        </template>
+      </iron-pages>
+    </paper-card>
+
+  </template>
+
+  <script>Polymer({is:"hl7-repcomponent",properties:{card_title:{type:String,value:""},component:{type:Object,notify:!0,observer:"_componentChange"},base_title:{type:String},selected:{value:0,notify:!0}},_componentChange:function(){this.base_title=this.component[0][0].c;for(i in this.component)this.component[i].r=this.component[i][0].r}});</script>
+</dom-module>
+</body></html>

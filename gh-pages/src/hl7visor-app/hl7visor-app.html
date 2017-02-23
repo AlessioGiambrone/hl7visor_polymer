@@ -1,0 +1,36 @@
+<html><head><link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
+<link rel="import" href="./hl7-segment.html">
+
+</head><body><dom-module id="hl7visor-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+        --app-primary-color: #4285f4;
+        --app-secondary-color: black;
+      }
+
+      .content {
+        width: 100%;
+      }
+
+      h2 {
+        font-family: 'Roboto', 'Noto', sans-serif;
+        -webkit-font-smoothing: antialiased;
+      };
+
+    </style>
+    <div class="content">
+      <h2>The HL7 Parser</h2>
+      <paper-textarea label="Paste HL7 here" value="{{hl7code}}"></paper-textarea>
+      <template is="dom-repeat" items="{{hl7segments}}" as="segment">
+        <hl7-segment hl7code="{{segment}}"></hl7-segment>
+      </template>
+    </div>
+  </template>
+
+  <script>Polymer({is:"hl7visor-app",properties:{hl7code:{type:String,observer:"_hl7codeChanged"},hl7segments:{type:Array,value:[]}},_hl7codeChanged:function(){this.getHl7segments(this.hl7code)},getHl7segments:function(e){e=e.split(/\r?\n/),this.splice("hl7segments",0,this.hl7segments.length),this.hl7segments=[];for(i in e)i>0&&("|"!==e[i][3]||e[i].substring(0,3).indexOf("|")>-1)?(this.pop("hl7segments",e[i]),this.push("hl7segments",e[i-1]+e[i])):this.push("hl7segments",e[i])}});</script>
+</dom-module>
+</body></html>

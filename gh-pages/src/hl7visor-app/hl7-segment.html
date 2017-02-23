@@ -1,0 +1,36 @@
+<html><head><link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="./hl7-field.html">
+
+</head><body><dom-module id="hl7-segment">
+  <template>
+    <style>
+
+      paper-card {
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+        display: block;
+        border-radius: 5px;
+        background-color: #fff;
+        color: #757575;
+        margin: 1em;
+      }
+
+    </style>
+
+    <paper-card heading="[[card_title]]">
+      <div class="card-content">hl7 source: [[hl7code]]</div>
+        <div class="card-actions">
+          <template is="dom-repeat" items="{{fieldArray}}" as="field">
+            <div>
+                <hl7-field field="[[field]]" card_title="[[card_title]]"></hl7-field>
+            </div>
+          </template>
+        </div>
+
+    </paper-card>
+  </template>
+
+  <script>Polymer({is:"hl7-segment",properties:{hl7code:{type:String},card_title:{type:String,value:""},fieldArray:{type:Array,value:[]}},ready:function(){for(this.card_title=this.hl7code.substring(0,3),fieldArrayTmp=this.hl7code.substring(4).split("|"),resultArray=[],this.splice("fieldArray",0,this.fieldArray.length),this.fieldArray=[],fieldArrayTmp=this.hl7code.substring(4).split("|"),c=0;c<fieldArrayTmp.length;c++)if(fieldArrayTmp[c])for(fieldArrayTmp_c=fieldArrayTmp[c].split("~"),r=0;r<fieldArrayTmp_c.length;r++)if(fieldArrayTmp_c[r])for(fieldArrayTmp_c_r=fieldArrayTmp_c[r].split("^"),ii=0;ii<fieldArrayTmp_c_r.length;ii++)resultArray[c]||(resultArray[c]=[]),resultArray[c][r]||(resultArray[c][r]=[]),fieldArrayTmp_c_r[ii]?resultArray[c][r][ii]={i:parseInt(i,10)+1,c:parseInt(c,10)+1,r:parseInt(r,10),ii:parseInt(ii,10)+1,value:fieldArrayTmp_c_r[ii],hidden:!1}:resultArray[c][r][ii]={i:parseInt(i,10)+1,c:parseInt(c,10)+1,r:parseInt(r,10),hidden:!0};this.push("fieldArray",resultArray)}});</script>
+</dom-module>
+</body></html>
