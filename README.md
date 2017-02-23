@@ -2,17 +2,26 @@
 
 A page for viewing HL7 v.2.x in a human-readable format.
 
-## Install the Polymer-CLI
+The page is served [here](https://alessiogiambrone.github.io/hl7visor_polymer/).
 
-First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) installed. Then run `polymer serve` to serve your application locally.
+## How to work on the project
 
-## Viewing Your Application
+### Install the Polymer-CLI and all the dependencies
+
+First, make sure you have the
+  [Polymer CLI](https://www.npmjs.com/package/polymer-cli) installed.
+
+Then build the dependencies with `bower install`.
+
+Finally run `polymer serve` to serve your application locally.
+
+### Viewing hl7visor
 
 ```
 $ polymer serve
 ```
 
-## Building Your Application
+### Building hl7visor
 
 ```
 $ polymer build
@@ -29,7 +38,7 @@ from:
 $ polymer serve build/bundled
 ```
 
-## Running Tests
+### Running Tests
 
 TODO: tests are to be implemented....
 
@@ -37,4 +46,7 @@ TODO: tests are to be implemented....
 $ polymer test
 ```
 
-Your application is already set up to be tested via [web-component-tester](https://github.com/Polymer/web-component-tester). Run `polymer test` to run your application's test suite locally.
+Your application is already set up to be tested via
+  [web-component-tester](https://github.com/Polymer/web-component-tester).
+
+Run `polymer test` to run your application's test suite locally.
